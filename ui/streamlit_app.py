@@ -41,6 +41,7 @@ if st.sidebar.button("🔄 Run Document Ingestion"):
     with st.spinner("Parsing documents & building Hybrid Indexes..."):
         try:
             run_ingestion_pipeline()
+            get_pipeline.clear()
             st.sidebar.success("Ingestion and indexing complete!")
         except Exception as e:
             st.sidebar.error(f"Ingestion failed: {e}")
