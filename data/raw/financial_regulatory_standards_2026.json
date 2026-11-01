@@ -1,0 +1,44 @@
+[
+  {
+    "id": "std_ifrs_s1_s2_01",
+    "standard": "IFRS S1 & IFRS S2",
+    "topic": "Sustainability & Climate Disclosures Scope and Pillars",
+    "content": "IFRS S1 sets general requirements for sustainability-related financial disclosures, and IFRS S2 covers climate-related risks and opportunities that could reasonably affect an entity’s prospects. IFRS S2 uses the four TCFD pillars: governance, strategy, risk management, and metrics and targets. IFRS S2 is effective for annual reporting periods beginning on or after 1 January 2024; adoption and mandatory filing obligations depend on jurisdiction. Official reference: IFRS Foundation, IFRS S2 Climate-related Disclosures, https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/"
+  },
+  {
+    "id": "std_ifrs_s2_ghg_02",
+    "standard": "IFRS S2",
+    "topic": "Scope 1, 2, and 3 Greenhouse Gas Accounting & Connectivity",
+    "content": "IFRS S2 disclosures classify greenhouse gas emissions as Scope 1 (direct emissions from sources owned or controlled by the entity), Scope 2 (indirect emissions from purchased or acquired electricity, steam, heating or cooling), and Scope 3 (other indirect emissions across the value chain). Scope 3 includes upstream and downstream categories; financed emissions are relevant to entities with asset-management, commercial-banking, or insurance activities. IFRS S2 generally requires Scope 3 disclosure. A transition relief may omit Scope 3 in an entity’s first annual reporting period applying IFRS S2; it is not a universal calendar-year 2026 expiration rule. Jurisdictional requirements and later amendments should be checked. Official references: IFRS Foundation, IFRS S2, https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/ ; IFRS S2 transition relief, https://www.ifrs.org/groups/tig-ifrs-s1-and-ifrs-s2/responses-to-questions-submitted/"
+  },
+  {
+    "id": "std_csrd_esrs_01",
+    "standard": "EU CSRD / ESRS",
+    "topic": "Double Materiality and Wave 2 Thresholds",
+    "content": "Directive (EU) 2026/470 amended the CSRD reporting scope. The general scope is limited to undertakings with net turnover exceeding EUR 450 million and an average of more than 1,000 employees during the financial year, subject to group-level rules and the applicable national implementing law. The amended Directive sets revised application dates, including application of the second set for financial years starting on or after 1 January 2027, and allows Member States to exempt certain undertakings from reporting for financial years starting in 2025 or 2026. Confirm the undertaking’s jurisdiction, group status, and national transposition before treating these thresholds as a filing obligation. Double materiality considers both the undertaking’s impacts on people and the environment and how sustainability matters affect the undertaking. Official reference: Directive (EU) 2026/470, https://eur-lex.europa.eu/eli/dir/2026/470/oj/eng"
+  },
+  {
+    "id": "std_csrd_audit_02",
+    "standard": "EU CSRD / ESRS",
+    "topic": "Digital Reporting (ESEF) and Mandatory Limited Assurance",
+    "content": "CSRD sustainability reporting remains subject to limited assurance. Directive (EU) 2026/470 postponed the deadline for the Commission to adopt limited-assurance standards to 1 July 2027 and removed the requirement to adopt reasonable-assurance standards. Digital-format and tagging requirements apply under the relevant EU reporting rules and implementing measures. Confirm the current national transposition and applicable standards for a specific reporting year. Official reference: Directive (EU) 2026/470, https://eur-lex.europa.eu/eli/dir/2026/470/oj/eng"
+  },
+  {
+    "id": "std_basel_iii_frtb_01",
+    "standard": "Basel III / IV Endgame",
+    "topic": "Fundamental Review of the Trading Book (FRTB) Market Risk",
+    "content": "Under the Basel market-risk framework, the internal models approach uses Expected Shortfall (ES), calculated at a one-tailed 97.5th percentile confidence level, and includes liquidity-horizon requirements. Desk-level backtesting and profit-and-loss attribution tests affect eligibility to use internal models. Implementation dates and supervisory rules vary by jurisdiction, so Basel standards should not be presented as a single global 2025–2026 national implementation date. Official reference: Basel Committee on Banking Supervision, MAR33, https://www.bis.org/bcbs/publ/d457.pdf"
+  },
+  {
+    "id": "std_basel_iii_output_floor_02",
+    "standard": "Basel III / IV Endgame",
+    "topic": "Operational Risk SMA and 72.5% Capital Output Floor",
+    "content": "The Basel framework sets a fully phased-in capital output floor of 72.5% of risk-weighted assets calculated under standardised approaches for banks using internal models; transition arrangements can affect the applicable percentage in a given jurisdiction and year. For operational risk, the standardised approach calculates the operational risk capital requirement as the Business Indicator Component (BIC) multiplied by the Internal Loss Multiplier (ILM), subject to the framework’s provisions and national discretion. Official references: Basel Framework, RBC output floor, https://www.bis.org/committees/bcbs/basel-framework/standard/rbc?allChapters=true ; Basel Framework, OPE25, https://www.bis.org/committees/bcbs/basel-framework/standard/ope/25/inforce/2023-01-01/published/2024-07-05"
+  },
+  {
+    "id": "std_sec_cyber_01",
+    "standard": "SEC Item 106 & Form 8-K",
+    "topic": "Four-Day Materiality Incident Rule and Governance Oversight",
+    "content": "Under SEC Form 8-K Item 1.05, a registrant generally must disclose a cybersecurity incident that it determines to be material within four business days after the materiality determination. The SEC rule includes a national-security or public-safety delay process involving the Attorney General. Item 106 of Regulation S-K requires disclosures about cybersecurity risk-management processes and governance. Official references: SEC, Form 8-K Item 1.05 cybersecurity disclosure rule, https://www.sec.gov/newsroom/press-releases/2023-139 ; SEC Form 8-K guidance, https://www.sec.gov/answers/form8k.htm"
+  }
+]
