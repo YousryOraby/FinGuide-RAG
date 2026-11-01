@@ -6,7 +6,7 @@ This deployment copy uses the Streamlit interface in `ui/streamlit_app.py` and t
 
 1. This repository and the Streamlit app are public. Do not add private documents, personal datasets, credentials, or local generated indexes.
 2. In Streamlit Community Cloud, create an app from that repository and select `ui/streamlit_app.py` as the app file.
-3. In Advanced settings, select Python 3.12 and add this secret:
+3. In the app settings, add this secret:
 
 ```toml
 GROQ_API_KEY = "your-new-Groq-key"

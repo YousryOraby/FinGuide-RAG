@@ -11,17 +11,21 @@ try:
 except Exception:
     pass
 
-# Add project root to sys.path
-sys.path.append(str(Path(__file__).resolve().parent.parent))
-
-from src.generation.chain import FinConRAGPipeline
-from src.ingestion.run_ingestion import run_ingestion_pipeline
-
 st.set_page_config(
     page_title="FinCon & Regulatory RAG Assistant",
     page_icon="💼",
     layout="wide"
 )
+
+if not os.environ.get("GROQ_API_KEY", "").strip():
+    st.error("Add GROQ_API_KEY in the Streamlit app settings under Secrets, then restart the app.")
+    st.stop()
+
+# Add project root to sys.path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+from src.generation.chain import FinConRAGPipeline
+from src.ingestion.run_ingestion import run_ingestion_pipeline
 
 # Custom header
 st.title("💼 FinCon & Financial Regulatory Intelligence Assistant")
