@@ -53,7 +53,23 @@ The embedding model is `sentence-transformers/paraphrase-multilingual-MiniLM-L12
 
 4. In the app, choose **Run Document Ingestion** and wait for indexing to complete before asking questions.
 
-For Streamlit Community Cloud, set `GROQ_API_KEY` in the app's **Settings → Secrets** instead of committing a secrets file.
+For Streamlit Community Cloud, set `GROQ_API_KEY` in the app's **Settings → Secrets** instead of committing a secrets file. Streamlit Community Cloud runs the Streamlit entry point directly; it does not launch the FastAPI service or Docker Compose stack.
+
+## Run the API and UI locally with Docker Compose
+
+The repository also includes a FastAPI service for local/containerized use. In this mode, the Streamlit UI sends query and ingestion requests to FastAPI. This Docker setup is separate from the Streamlit Community Cloud deployment.
+
+1. Copy `.env.example` to `.env` and set `GROQ_API_KEY`.
+2. From the repository root, build and start both services:
+
+   ```bash
+   docker compose up --build -d
+   ```
+
+3. Open the UI at `http://localhost:8501` and the API documentation at `http://localhost:8000/docs`.
+4. Run ingestion from the UI before asking questions.
+
+The API and UI share the local generated ChromaDB and ingestion files through mounted folders. Keep `.env`, generated indexes, and private data out of Git.
 
 ## Repository layout
 
@@ -62,7 +78,10 @@ data/raw/          Curated JSON reference corpus for the hosted demo
 src/ingestion/     Parsing, hierarchical chunking, and indexing
 src/retrieval/     Query expansion, hybrid retrieval, and reranking
 src/generation/    Grounded answer prompt and RAG pipeline
+api/              FastAPI query, ingestion, and health endpoints
 ui/                Streamlit interface
+Dockerfile         Local container image for the API and UI
+docker-compose.yml Local API and UI services
 ```
 
 The hosted demo uses a deliberately small JSON corpus. The larger 75k-row dataset and generated indexes are excluded from this repository. Indexes are built when ingestion runs and may need to be rebuilt if the hosting environment restarts.

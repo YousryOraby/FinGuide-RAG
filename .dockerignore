@@ -1,0 +1,13 @@
+.env
+.env.*
+.streamlit/secrets.toml
+.git
+.venv
+venv
+__pycache__
+*.py[cod]
+chroma_db
+data/processed
+data/parent_docstore.json
+data/bm25_index.pkl
+data/raw/baai_finance_economics_raw_75k.csv

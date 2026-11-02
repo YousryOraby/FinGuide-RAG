@@ -35,6 +35,20 @@ class FinConRAGPipeline:
     def refresh_parent_store(self):
         self.parent_store = HierarchicalChunker.load_parent_store()
 
+    @staticmethod
+    def _parent_id_for(child: Dict[str, Any]) -> Optional[str]:
+        metadata = child.get("metadata") or {}
+        parent_id = child.get("parent_id") or metadata.get("parent_id")
+        if parent_id is None:
+            return None
+        parent_id = str(parent_id).strip()
+        if not parent_id:
+            return None
+        child["parent_id"] = parent_id
+        metadata["parent_id"] = parent_id
+        child["metadata"] = metadata
+        return parent_id
+
     def run(self, query: str, top_k_rerank: int = settings.RERANK_TOP_K) -> Dict[str, Any]:
         """
         1. Pre-Retrieval: Query Expansion & Transformation (Enrich with FinCon domain terms)
@@ -75,9 +89,7 @@ class FinConRAGPipeline:
 
         for idx, child in enumerate(reranked_child_chunks, start=1):
             metadata = child.get("metadata") or {}
-            parent_id = child.get("parent_id") or metadata.get("parent_id")
-            if parent_id:
-                child["parent_id"] = parent_id
+            parent_id = self._parent_id_for(child)
             parent_info = self.parent_store.get(parent_id, {
                 "text": child["text"],
                 "metadata": metadata

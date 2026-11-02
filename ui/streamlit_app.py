@@ -2,6 +2,7 @@ import streamlit as st
 import sys
 import os
 from pathlib import Path
+import requests
 
 try:
     if "GROQ_API_KEY" in st.secrets:
@@ -27,6 +28,8 @@ sys.path.append(str(Path(__file__).resolve().parent.parent))
 from src.generation.chain import FinConRAGPipeline
 from src.ingestion.run_ingestion import run_ingestion_pipeline
 
+rag_api_url = os.environ.get("RAG_API_URL", "").rstrip("/")
+
 # Custom header
 st.title("💼 FinCon & Financial Regulatory Intelligence Assistant")
 st.markdown(
@@ -40,8 +43,12 @@ top_k = st.sidebar.slider("Top-K Rerank Results", min_value=1, max_value=8, valu
 if st.sidebar.button("🔄 Run Document Ingestion"):
     with st.spinner("Parsing documents & building Hybrid Indexes..."):
         try:
-            run_ingestion_pipeline()
-            st.cache_resource.clear()
+            if rag_api_url:
+                response = requests.post(f"{rag_api_url}/ingest", timeout=3600)
+                response.raise_for_status()
+            else:
+                run_ingestion_pipeline()
+                st.cache_resource.clear()
             st.sidebar.success("Ingestion and indexing complete!")
         except Exception as e:
             st.sidebar.error(f"Ingestion failed: {e}")
@@ -63,15 +70,17 @@ selected_sample = st.sidebar.selectbox("Choose a 2026 sample query:", [""] + sam
 def get_pipeline():
     return FinConRAGPipeline()
 
-try:
-    pipeline = get_pipeline()
-except Exception:
-    st.error(
-        "The RAG pipeline could not start. Check that document ingestion has completed "
-        "and that the deployment dependencies and Groq secret are configured. "
-        "Open the app logs for the startup error."
-    )
-    st.stop()
+pipeline = None
+if not rag_api_url:
+    try:
+        pipeline = get_pipeline()
+    except Exception:
+        st.error(
+            "The RAG pipeline could not start. Check that document ingestion has completed "
+            "and that the deployment dependencies and Groq secret are configured. "
+            "Open the app logs for the startup error."
+        )
+        st.stop()
 
 # Main query input
 user_query = st.text_input("Enter your Financial Controlling / Accounting Question:", value=selected_sample if selected_sample else "")
@@ -82,7 +91,16 @@ if st.button("🔍 Search & Analyze", type="primary"):
     else:
         with st.spinner("Executing Hybrid Retrieval, Reranking & Synthesis..."):
             try:
-                result = pipeline.run(query=user_query, top_k_rerank=top_k)
+                if rag_api_url:
+                    response = requests.post(
+                        f"{rag_api_url}/query",
+                        json={"query": user_query, "top_k": top_k},
+                        timeout=300,
+                    )
+                    response.raise_for_status()
+                    result = response.json()
+                else:
+                    result = pipeline.run(query=user_query, top_k_rerank=top_k)
             except Exception:
                 st.error(
                     "The search could not be completed. Check the Groq API key and model "
@@ -116,7 +134,9 @@ if st.button("🔍 Search & Analyze", type="primary"):
                     st.markdown(f"#### Rank {idx}: `{chunk['id']}`")
                     st.markdown(f"**Cross-Encoder Rerank Score:** `{chunk.get('rerank_score', 0.0):.4f}` | **RRF Score:** `{chunk.get('rrf_score', 0.0):.4f}`")
                     st.text_area(f"Child Chunk #{idx} Content", chunk["text"], height=100, key=f"child_{idx}")
-                    st.markdown(f"**Parent ID:** `{chunk.get('parent_id')}` | **Metadata:** {chunk.get('metadata')}")
+                    metadata = chunk.get("metadata") or {}
+                    parent_id = chunk.get("parent_id") or metadata.get("parent_id")
+                    st.markdown(f"**Parent ID:** `{parent_id}` | **Metadata:** {metadata}")
                     st.markdown("---")
 
             # 4. Expanded Parent Contexts
