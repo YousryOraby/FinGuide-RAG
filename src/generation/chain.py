@@ -56,6 +56,18 @@ class FinConRAGPipeline:
         # Step 3: Cross-Encoder Reranking against original query
         reranked_child_chunks = self.reranker.rerank(query, candidate_child_chunks, top_k=top_k_rerank)
 
+        if not reranked_child_chunks:
+            return {
+                "query": query,
+                "entities": recognized_entities,
+                "expanded_query": expanded_query,
+                "answer": "I could not find a relevant passage in the indexed documents. Try a more specific question or check that ingestion completed.",
+                "retrieved_child_chunks": [],
+                "retrieved_parent_chunks": [],
+                "context_used": "No relevant documents found.",
+                "sources": []
+            }
+
         # Step 4: Hierarchical Parent Lookup & Deduplication
         retrieved_parents = []
         seen_parent_ids = set()
@@ -107,10 +119,5 @@ class FinConRAGPipeline:
             ]
             response = self.llm.invoke(messages)
             return response.content
-        except Exception as e:
-            return (
-                f"[Generated from Retrieved Grounded Context]\n\n"
-                f"Based on the retrieved accounting and controlling documents:\n"
-                f"{prompt[:600]}...\n\n"
-                f"(Note: ChatGroq error or fallback: {str(e)})"
-            )
+        except Exception as exc:
+            raise RuntimeError("Groq answer generation failed.") from exc

@@ -63,7 +63,15 @@ selected_sample = st.sidebar.selectbox("Choose a 2026 sample query:", [""] + sam
 def get_pipeline():
     return FinConRAGPipeline()
 
-pipeline = get_pipeline()
+try:
+    pipeline = get_pipeline()
+except Exception:
+    st.error(
+        "The RAG pipeline could not start. Check that document ingestion has completed "
+        "and that the deployment dependencies and Groq secret are configured. "
+        "Open the app logs for the startup error."
+    )
+    st.stop()
 
 # Main query input
 user_query = st.text_input("Enter your Financial Controlling / Accounting Question:", value=selected_sample if selected_sample else "")
@@ -73,7 +81,14 @@ if st.button("🔍 Search & Analyze", type="primary"):
         st.warning("Please enter a query.")
     else:
         with st.spinner("Executing Hybrid Retrieval, Reranking & Synthesis..."):
-            result = pipeline.run(query=user_query, top_k_rerank=top_k)
+            try:
+                result = pipeline.run(query=user_query, top_k_rerank=top_k)
+            except Exception:
+                st.error(
+                    "The search could not be completed. Check the Groq API key and model "
+                    "in Streamlit Secrets, then review the app logs if the issue continues."
+                )
+                st.stop()
 
             # 1. Answer section
             st.markdown("### 📝 Financial Controlling Synthesis")
