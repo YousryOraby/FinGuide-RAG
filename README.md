@@ -2,7 +2,7 @@
 
 A retrieval-augmented assistant for exploring financial controlling and regulatory standards. Ask a question in plain English and the app searches its reference documents, ranks relevant passages, and drafts an answer with source attribution.
 
-**Live demo:** https://share.streamlit.io/user/yousryoraby
+**Live demo:** https://finguide-rag-yousry.streamlit.app/
 
 ## What it does
 
