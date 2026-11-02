@@ -74,10 +74,13 @@ class FinConRAGPipeline:
         context_blocks = []
 
         for idx, child in enumerate(reranked_child_chunks, start=1):
-            parent_id = child.get("parent_id")
+            metadata = child.get("metadata") or {}
+            parent_id = child.get("parent_id") or metadata.get("parent_id")
+            if parent_id:
+                child["parent_id"] = parent_id
             parent_info = self.parent_store.get(parent_id, {
                 "text": child["text"],
-                "metadata": child["metadata"]
+                "metadata": metadata
             })
 
             if parent_id not in seen_parent_ids:
